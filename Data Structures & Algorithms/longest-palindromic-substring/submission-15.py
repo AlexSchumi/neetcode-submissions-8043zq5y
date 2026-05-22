@@ -1,0 +1,39 @@
+# brute-force solution version
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        res = 0
+        res_string = ''
+        for i in range(len(s)):
+            for j in range(i, len(s)):
+                if s[i:j+1] == s[i:j+1][::-1]:
+                    if j - i + 1 >= res:
+                        res_string = s[i:j+1]
+                        res = max(res, j - i + 1)
+        return res_string
+
+# Optimized Solution;
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        resIdx = 0
+        resLen = 0
+
+        for i in range(len(s)):
+            l, r = i, i
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    resIdx = l
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
+            
+            # even length
+            l, r = i, i + 1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    resIdx = l
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
+        return s[resIdx : resIdx + resLen]
+
+        
